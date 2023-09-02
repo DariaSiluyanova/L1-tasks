@@ -15,5 +15,6 @@
   "bugs": {
     "url": "https://github.com/DariaSiluyanova/L1-tasks/issues"
   },
-  "homepage": "https://github.com/DariaSiluyanova/L1-tasks#readme"
+  "homepage": "https://github.com/DariaSiluyanova/L1-tasks#readme",
+  "type": "module"
 }
