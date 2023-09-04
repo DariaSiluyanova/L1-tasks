@@ -14,15 +14,19 @@ function makeJson(elem){
     }
     /*для объектов */
     else if (typeof elem === "object" && Object.entries(elem).length !== 0) {
-        /*форматирум строковые ключи и значения объекта*/
+        /**объект из пар ключ-значение*/
         let stringObj = Object.fromEntries(
+            /*форматируем строковые ключи и значения объекта*/
             Object.entries(elem).map(item => {
+                //для строковых ключей
                 if (typeof item[0] === "string") {
                     item[0] = `"${item[0]}"`
                 }
-                if (typeof item[1] === "string") {
+                //для строковых и объектных значений
+                if (typeof item[1] === "string" || typeof item[1] === "object") {
                     item[1] = `"${item[1]}"`
                 }
+                //возвращаем пару ключ значение
                 return [item[0], item[1]]
             })
         )
