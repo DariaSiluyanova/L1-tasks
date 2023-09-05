@@ -1,5 +1,5 @@
 // Реализовать функцию конвертации строки в JSON со всеми необходимыми проверками и валидациями. JSON.parse()
-const object = '{"username": "admin, "City": "", "Age": 26, "Image": "/images/static/imagination/cb8b8fc3-b450-4338-80b5-c8a1b93ec58a_yb8VU8b.jpg", "Sex": "M"}'
+const object = '{"username": "admin", "City": "", "Age": 26, "Image": "/images/static/imagination/cb8b8fc3-b450-4338-80b5-c8a1b93ec58a_yb8VU8b.jpg", "Sex": "M"}'
 const array = '["username": "admin", "City": "", "Age": null]'
 const number = -10
 const testItem = true
@@ -27,13 +27,12 @@ const stringToJson = (string) => {
                 }
                 //проверка каждого ключа и значения 
                 let item = arrItems[i].split(":")
+                console.log(!checkQuotes(item[1]))
                 if (
                     //если строка
                     typeof item === "string" &&
-                    !checkNums(item[0]) &&
-                    !checkNums(item[1]) &&
-                    checkQuotes(item[0]) &&
-                    checkQuotes(item[1])
+                    !checkQuotes(item[0]) ||
+                    !checkQuotes(item[1])
                 ) {
                     return false
                 }
@@ -64,10 +63,13 @@ const stringToJson = (string) => {
     }
     //true, если строка начинаeтся и заканчиваeтся - \"
     function checkQuotes(item) {
-        if (item.trim().startsWith("\"") && item.trim().endsWith("\"")) {
+        let pattern = /("([^"]|"")*")/g
+        if (item.trim().startsWith("\"") && item.trim().endsWith("\"") && pattern.test(item.trim())) {
             return true
         }
         return false
-    }
+    }    
 }
+
 console.log(stringToJson(object))
+
