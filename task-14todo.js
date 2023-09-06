@@ -9,7 +9,7 @@
 function getImage(url) {
     return new Promise ((resolve, reject) => {
         try {
-            const image = readFile(url)
+            const image = `"Промис разрешается с данными об изображении url:" ${url}`
             resolve(image)
         } catch(error) {
             reject(new Error(error))
