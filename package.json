@@ -16,5 +16,8 @@
     "url": "https://github.com/DariaSiluyanova/L1-tasks/issues"
   },
   "homepage": "https://github.com/DariaSiluyanova/L1-tasks#readme",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "moment": "^2.29.4"
+  }
 }
