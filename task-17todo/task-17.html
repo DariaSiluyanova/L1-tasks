@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body class="body">
+    <form action="/some-route" action="GET" id="search">
+        <div class="container">
+            <label style="margin-right: 20px;" for="geo">Введите адрес</label>
+            <input class="geo" id="geo" list="geo">
+            <datalist id="geo" class="search-results">
+            </datalist>
+            <button type="submit">Найти адрес</button>
+        </div>
+        <div id="map" style="width: 600px; height: 400px"></div>
+    </form>
+    <script src="https://api-maps.yandex.ru/v3/?apikey=148d6a59-14bc-4ade-88a0-94fdc5d29149&lang=ru_RU"></script>
+    <script src="https://suggest-maps.yandex.ru/v1/suggest?apikey=3694998d-3fed-4adc-82a7-1eee2ce42b0a&lang=ru_RU"></script>
+    <script src="/task-17/task-17.js"></script>
+</body>
+</html>
+<style>
+    .body {
+        display: block;
+        height: 100%;
+        width: 100%;
+    }
+    
+    .geo {
+        height: 20px;
+    }
+
+    #search {
+        position: relative;
+        display: flex; 
+        flex-direction: column;     
+        width: 100%; 
+        height: 500px;
+        align-items: center;
+    }
+
+    option {
+        border-bottom: 1px solid black;
+    }
+
+    .search-results {
+        display: block; 
+        position: absolute; 
+        top: 86px; width: 100%; 
+        background-color: #fff;
+    }
+
+    .container {
+        display:flex;
+        position: relative; 
+        flex-direction: column; 
+        justify-content: space-around; 
+        width: 300px; 
+        height: 150px;
+    }
+
+    button {
+        background-color: green;
+        height: 30px;
+        color: azure;
+        border: none;
+        border-radius: 10px;
+    }
+</style>
