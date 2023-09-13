@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 150px;
+            background: rgb(255, 187, 71);
+        }
+
+        .book {
+            font-weight: 700;
+            color: rgb(226, 116, 43);
+        }
+    </style>
+</head>
+<body>
+        <!-- Задача: Создать и добавить стиль для элемента: Напишите функцию, которая
+    создает новый элемент, добавляет его в DOM и устанавливает для него стиль с
+    помощью CSS -->
+    <div class="container"></div>
+</body>
+<script type="text/javascript">
+    const container = document.querySelector(".container")
+    const book = document.createElement("div")
+    book.classList.add("book")
+    book.textContent = "Властелин колец"
+    container.appendChild(book)
+</script>
+</html>

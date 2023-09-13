@@ -1,0 +1,182 @@
+<!-- Анализатор сложности пароля: создайте функцию, которая оценивает сложность введенного пользователем пароля. Необходимо анализировать
+длину пароля, использование различных символов, наличие чисел и букв в разных регистрах. Выведите пользователю оценку сложности пароля и
+предложите улучшения, если пароль слишком слабый. -->
+
+<html>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            input {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                margin-top: 6px;
+                margin-bottom: 16px;
+            }
+
+            input[type=submit] {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            .container {
+                background-color: #f1f1f1;
+                padding: 20px;
+            }
+
+            /* Окно сообщения отображается, когда пользователь нажимает на поле пароля */
+            #message {
+                display:none;
+                background: #f1f1f1;
+                color: #000;
+                position: relative;
+                padding: 20px;
+                margin-top: 10px;
+            }
+
+            #message p {
+                padding: 10px 35px;
+                font-size: 18px;
+            }
+
+            /* Добавить зеленый цвет текста и галочка, когда требования верны */
+            .valid {
+                color: green;
+            }
+
+            .valid:before {
+                position: relative;
+                left: -35px;
+            }
+
+            /* Добавить красный цвет текста и собой "x" и значок, когда требования не правы */
+            .invalid {
+                color: red;
+            }
+
+            .invalid:before {
+                position: relative;
+                left: -35px;
+            }
+
+            .complex {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <form action="#">
+              <label for="user">Пароль</label>
+            <input type="password" id="user" name="user" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Должно содержать по крайней мере одно число, одну заглавную и строчную буквы, а также не менее 8 и более символов" required>
+              <input type="submit" value="Отправить">
+            </form>
+          </div>
+          
+          <div id="message">
+            <p id="complex" class="complex"></p>
+            <h3>Пароль должен содержать следующее:</h3>
+            <p id="lowcase" class="invalid">буквы <b>нижнего регистра</b></p>
+            <p id="uppercase" class="invalid">Минимум 1 <b> заглавную</b> букву</p>
+            <p id="number" class="invalid">Минимум 1 <b>число</b></p>
+            <p id="length" class="invalid">Минимум <b>8 цифр</b></p>
+            <p id="symbol" class="invalid">Минимум <b>1 символ</b></p>
+          </div>
+          <script>
+                let input = document.getElementById("user");
+                let lowcase = document.getElementById("lowcase");
+                let uppercase = document.getElementById("uppercase");
+                let number = document.getElementById("number");
+                let length = document.getElementById("length");
+                let symbolsCase = document.getElementById("symbol");
+                let complex = document.querySelector(".complex")
+
+                // Когда пользователь нажимает на поле - рендерятся подсказки к валидному паролю
+                input.onfocus = function() {
+                    document.getElementById("message").style.display = "block";
+                }
+
+                // Когда пользователь начинает вводить что-то в поле пароля
+                input.onkeyup = function() {
+                    let complexity = {
+                        score: 0
+                    }
+
+                    // Проверка строчных букв
+                    let lowerCaselowcases = /[a-z]/g;
+                    if(input.value.match(lowerCaselowcases)) {
+                        lowcase.classList.remove("invalid");
+                        lowcase.classList.add("valid");
+                        complexity.score = complexity.score + 1
+                    } else {
+                        lowcase.classList.remove("valid");
+                        lowcase.classList.add("invalid");
+                    }
+
+                     // Проверка наличия символов
+                    let symbols = /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/g;
+                    if(input.value.match(symbols)) {
+                        symbolsCase.classList.remove("invalid");
+                        symbolsCase.classList.add("valid");
+                        complexity.score = complexity.score + 1
+                    } else {
+                        symbolsCase.classList.remove("valid");
+                        symbolsCase.classList.add("invalid");
+                    }
+
+                    // Проверка заглавных букв
+                    let upperCaselowcases = /[A-Z]/g;
+                    if(input.value.match(upperCaselowcases)) {
+                        uppercase.classList.remove("invalid");
+                        uppercase.classList.add("valid");
+                        complexity.score = complexity.score + 1
+                    } else {
+                        uppercase.classList.remove("valid");
+                        uppercase.classList.add("invalid");
+                    }
+
+                    // Проверка чисел
+                    let numbers = /[0-9]/g;
+                    if(input.value.match(numbers)) {
+                        number.classList.remove("invalid");
+                        number.classList.add("valid");
+                        complexity.score = complexity.score + 1
+                    } else {
+                        number.classList.remove("valid");
+                        number.classList.add("invalid");
+                    }
+
+                    // Проверить длину
+                    if(input.value.length >= 8) {
+                        length.classList.remove("invalid");
+                        length.classList.add("valid");
+                        complexity.score = complexity.score + 1
+                    } else {
+                        length.classList.remove("valid");
+                        length.classList.add("invalid");
+                    }
+
+                    if(complexity.score < 3) {
+                        complex.style.display="block"
+                        complex.textContent = "Безопасность пароля: низкая"
+                    }
+
+                    if(complexity.score >= 3 && complexity.score < 5) {
+                        complex.style.display="block"
+                        complex.textContent = "Безопасность пароля: средняя"
+                    }
+
+                    if(complexity.score >= 5) {
+                        complex.style.display="block"
+                        complex.textContent = "Безопасность пароля: высокая"
+                    }
+                }
+          </script>
+    </body>
+</html>

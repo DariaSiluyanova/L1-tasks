@@ -1,0 +1,224 @@
+
+<!-- Разработайте страницу, отображающую таблицу с данными. Данные
+необходимо подгружать из этого источника(http://www.filltext.com/?rows=1000&fname=%7BfirstName%7D&lname=%7BlastName%7D&tel=%7Bphone%7Cformat%7D&address=%7BstreetAddress%7D&city=%7Bcity%7D&state=%7BusState%7Cabbr%7D&zip=%7Bzip%7D&pretty=true)
+Требования:
+    ● данные должны загружаться при загрузке страницы
+    ● необходимо реализовать сортировку по убыванию и по возрастания для
+    всех колонок
+    ● необходимо реализовать клиентскую пагинацию (50 элементов на
+    странице) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task-24</title>
+    <style type="text/css">
+        .table {
+            width: 100%;
+            margin-bottom: 20px;
+            border: 5px solid #fff;
+            border-top: 5px solid #fff;
+            border-bottom: 3px solid #fff;
+            border-collapse: collapse; 
+            outline: 3px solid #ffd300;
+            font-size: 15px;
+            background: #fff!important;
+        }
+        .table th {
+            font-weight: bold;
+            padding: 7px;
+            background: #ffd300;
+            border: none;
+            text-align: left;
+            font-size: 15px;
+            border-top: 3px solid #fff;
+            border-bottom: 3px solid #ffd300;
+        }
+        .table td {
+            padding: 7px;
+            border: none;
+            border-top: 3px solid #fff;
+            border-bottom: 3px solid #fff;
+            font-size: 15px;
+        }
+        .table tbody tr:nth-child(even){
+            background: #f8f8f8!important;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+        }
+
+        .pagination__list {
+            display: flex;
+            flex-wrap: wrap;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .pagination__item {
+            padding: 8px;
+            margin: 8px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="fnameTitle">Имя</th>
+                <th class="lnameTitle">Фамилия</th>
+                <th class="telTitle">Телефон</th>
+                <th class="addressTitle">Адрес</th>
+                <th class="cityTitle">Город</th>
+                <th class="stateTitle">Штат</th>
+                <th class="zipTitle">Индекс</th>
+            </tr>
+        </thead>
+        <tbody class="body"></tbody>
+    </table>
+    <div class="pagination"></div>
+    <script type="text/javascript">
+        const tbody = document.querySelector('.table').tBodies[0]
+        const tableBody = document.querySelector('.body')
+        const keys = ['fname', 'lname', 'tel', 'address', 'city', 'state', 'zip']
+        const name = document.querySelector(".fnameTitle")
+        const secondName = document.querySelector(".lnameTitle")
+        const tel = document.querySelector(".telTitle")
+        const address = document.querySelector(".addressTitle")
+        const cityTitle = document.querySelector(".cityTitle")
+        const stateTitle = document.querySelector(".stateTitle")
+        const zipTitle = document.querySelector(".zipTitle")
+        /*
+        *function получения данных и заполения таблицы
+        */
+        async function getPeople() {
+            await fetch('http://www.filltext.com/?rows=1000&fname=%7BfirstName%7D&lname=%7BlastName%7D&tel=%7Bphone%7Cformat%7D&address=%7BstreetAddress%7D&city=%7Bcity%7D&state=%7BusState%7Cabbr%7D&zip=%7Bzip%7D&pretty=true')
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                let row
+                //цикл по которому на каждый объект создается отдельная строка в таблице
+                //и ячейка заполняется содержимым объекта
+                
+                //функция пагинации 
+                function pagination() {
+                    let currentPage = 1;
+                    let rows = 50;
+                    displayPagination(data, rows)
+
+                    //фукнция, создающая номера пагинации в html
+                    //@pageNumber {number} номер страницы
+                    //@return itemList - список номеров страниц
+                    function displayPaginationBtn(pageNumber) {
+                        const itemList = document.createElement("li")
+                        itemList.classList.add("pagination__item")
+                        itemList.innerText = pageNumber
+
+                        itemList.addEventListener("click", () => {
+                            currentPage = pageNumber
+                            displayPage(data, rows, currentPage)
+                        })
+
+                        return itemList
+                    }
+
+
+                    //функция рендера пагинации
+                    //@arr {array} массив данных
+                    //@rowsPerPage {number} количество rows на одну страницу
+                    function displayPagination(arr, rowsPerPage) {
+                        const pagination = document.querySelector(".pagination")
+                        const pagesCount = Math.ceil(arr.length/rowsPerPage)
+                        const list = document.createElement("ul")
+                        list.classList.add("pagination__list")
+
+                        for (let i =0; i < pagesCount; i++) {
+                            const itemList = displayPaginationBtn(i + 1)
+                            list.appendChild(itemList)
+                        }
+                        pagination.appendChild(list)
+                    }
+                }
+
+                pagination()
+
+                //функция, сокращающая данные до 50ти элементов 
+                //@arr {array} массив данных с сервера
+                //@rowsPerPage {number} количество отображаемых на одной стр эл-в
+                //@page {number} номер страницы
+                function displayPage (arr, rowsPerPage, page) {
+                    tableBody.innerHTML = ""
+                    page--
+                    const start = rowsPerPage * page;
+                    const end = start + rowsPerPage;
+                    const paginatedData = arr.slice(start, end)
+                    
+                    Object.values(paginatedData).forEach(dataRow => {
+                        row = tbody.insertRow();
+                        keys.forEach(val =>{
+                            let cell = row.insertCell()
+                            cell.textContent = dataRow[val]
+                            cell.classList.add(val)
+                        })
+                    });
+                }
+
+                //по клику на определенный заголовок таблицы, она сортируется по возрастанию
+                name.addEventListener("click", function() {
+                    return sort(1)
+                })
+
+                secondName.addEventListener("click", function() {
+                    return sort(2)
+                })
+
+                tel.addEventListener("click", function() {
+                    return sort(3)
+                })
+
+                address.addEventListener("click", function() {
+                    return sort(4)
+                })
+
+                cityTitle.addEventListener("click", function() {
+                    return sort(5)
+                })
+
+                stateTitle.addEventListener("click", function() {
+                    return sort(6)
+                })
+
+                zipTitle.addEventListener("click", function() {
+                    return sort(7)
+                })
+            })
+        }
+
+        //функция собирающая и сортирующая данные таблицы 
+        //@cell {number} - номер столбца
+        function sort(cell) {
+            let arr = []
+            document.querySelectorAll('tr').forEach((element) => {
+                arr.push(element)
+            })
+            sortTable(arr.slice(1), cell)
+        }
+
+        //функция сортировки, сравнивающая ячейки текущей и предыдущей строк
+        //@array {array} - массив данных 
+        //@cell {number} - номер сортируемого столбца
+        function sortTable(array, cell) {
+            array.sort((rowA, rowB) => rowA.cells[cell - 1].innerHTML > rowB.cells[cell - 1].innerHTML ? 1 : -1)
+            tbody.append(...array)
+        }
+
+        getPeople()
+    </script>
+</body>
+</html>
