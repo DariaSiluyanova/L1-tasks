@@ -1,39 +1,68 @@
 let result = []
-fetch("https://jsonplaceholder.org/users")
-.then((response) => {
-    return response.json()
-})
-.then((data) => {
-    let result = Array.from(data)
-    let node = new Node()
-    result.forEach((element) => {
-        node.addNode(element)
-    })
-    console.log(node)
-})
+const people = [
+    {name:"Shyam", email:"shyamjaiswal@gmail.com"},  
+    {name:"Bob", email:"bob32@gmail.com"},  
+    {name:"Jai", email:"jai87@gmail.com"}  
+] 
+
+//переформатируем в JSON формат
+const data = JSON.stringify(people)
+
+// Разработайте функцию преобразования JSON в связный список. На входе
+// функция должна получать JSON, содержащий список объектов, на выходе
+// объект, представляющий из себя односвязный список.
 
 
 class Node { 
-    constructor(value) {
+    //конструктор класса связного списка
+    constructor(value, next = null) {
         this.value = value;
-        this.next = null;
+        this.next = next;
     }
 
-    addNode(value) {
-        let node = new Node(value); //creating the node using class Node
-    
-        if (this.length === 0) {
-            this.head = node; // If there are no nodes 
-            
-        } else {
-            let current = this.head;
-    
-            while(current.next) {
-                current = current.next;
-            }
-    
-            current.next = new Node(value);
-        }
-        this.length++;
+    toString() {
+        return `${this.value}`
     }
 }
+
+//создаем класс для листа с узлами
+class LinkedList {
+    //по умолчанию
+    constructor() {
+        this.head = null
+        this.tail = null
+    }
+
+    //метод добавления нового элемента в конец списка
+    addNode(value) {
+        let newNode = new LinkedList(value);
+    
+        //в случае, если ещё не было узлов списка, создаем первый 
+        if (this.length === 0) {
+            this.head = newNode;
+            this.tail = newNode; 
+            return this 
+        } else {
+           this.tail.next = newNode;
+
+           this.tail = newNode
+           return this
+        }
+    }
+
+    toArray() {
+        const nodes = []
+
+        let currentNode = this.heard
+
+        while(currentNode) {
+            nodes.push(currentNode)
+            currentNode = currentNode.next;
+        }
+
+        return nodes
+    }
+}
+
+let newList = new LinkedList()
+console.log(people.toArray())
