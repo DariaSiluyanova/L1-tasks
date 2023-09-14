@@ -4,11 +4,11 @@
 
 async function test() {
     //сымитируем сервер и выведем в консоль результат ответа сервера
-    let promise = new Promise((resolve, reject) => {
+    let promise = await new Promise((resolve, reject) => {
         setTimeout(() => resolve("end"), 2000)
     });
     
-    let result = await promise
+    let result = promise
 
     console.log(result)
 }

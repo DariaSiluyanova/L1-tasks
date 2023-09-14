@@ -5,9 +5,8 @@ const people = [
     {name:"Jai", email:"jai87@gmail.com"}  
 ] 
 
-//переформатируем в JSON формат
-const data = JSON.stringify(people)
-
+//"переформатируем" JSON формат в обычный массив
+const data = JSON.parse(JSON.stringify(people))
 // Разработайте функцию преобразования JSON в связный список. На входе
 // функция должна получать JSON, содержащий список объектов, на выходе
 // объект, представляющий из себя односвязный список.
@@ -19,7 +18,7 @@ class Node {
         this.value = value;
         this.next = next;
     }
-
+    
     toString() {
         return `${this.value}`
     }
@@ -38,31 +37,27 @@ class LinkedList {
         let newNode = new LinkedList(value);
     
         //в случае, если ещё не было узлов списка, создаем первый 
-        if (this.length === 0) {
+        if (!this.head || !this.tail) {
             this.head = newNode;
             this.tail = newNode; 
             return this 
-        } else {
-           this.tail.next = newNode;
-
-           this.tail = newNode
-           return this
-        }
-    }
-
-    toArray() {
-        const nodes = []
-
-        let currentNode = this.heard
-
-        while(currentNode) {
-            nodes.push(currentNode)
-            currentNode = currentNode.next;
-        }
-
-        return nodes
+        } 
+        
+        this.tail.next = newNode;
+        this.tail = newNode
+        return this
     }
 }
 
-let newList = new LinkedList()
-console.log(people.toArray())
+function formateJSON() {
+        let newList = new LinkedList()
+        let i = 0
+        data.forEach(element => {
+        newList.addNode(element)
+        console.log(newList)
+    }); 
+    return newList
+}
+
+//тут я подзастряла, не могу вывести значения json в список
+console.log(formateJSON())
