@@ -13,8 +13,9 @@
 
         body {
             display: flex;
+            flex-direction: column;
             width: 100%;
-            justify-content: center;
+            align-items: center;
         }
 
         .filmsList {
@@ -28,18 +29,58 @@
 <body>
     <ul class="filmsList">
         <li class="filmsList__item">The Shawshank Redemption</li>
+    </ul>
+    <ul class="filmsList">
         <li class="filmsList__item">The Godfather</li>
+    </ul>
+    <ul class="filmsList">
         <li class="filmsList__item">The Dark Knight</li>
+    </ul>
+    <ul class="filmsList">
         <li class="filmsList__item">Schindler's List</li>
+    </ul>
+    <ul class="filmsList">
         <li class="filmsList__item">The Lord of the Rings</li>
+    </ul>
+    <ul class="filmsList">
         <li class="filmsList__item">12 Angry Men</li>
+    </ul>
+    <ul class="filmsList">
         <li class="filmsList__item">Pulp Fiction</li>
+    </ul>
+    <ul class="filmsList">
         <li class="filmsList__item">Inception</li>
     </ul>
 <script type="text/javascript">
-    const list = document.querySelectorAll(".filmsList__item")
-    let arr = []
-    
+    let list = document.querySelectorAll(".filmsList__item")
+    //функция прохода по dom элементам
+    //@element { string } элемент дом дерева для прохода
+    //@func { callback } функция-колбэк которая делает "что-то" с элементом
+    let walkDom = function(element, func) {
+        //учитываем возможную ошибку
+        if(typeof func!='function') return;
+
+        //функция рекурсивного цикла
+        let loop = function(element)
+        {
+            //колбэк вызывается для входящего элемента
+            do {
+                func(element); 
+                //если внутри элемента есть "дети", используем рекурсию
+                if(element.hasChildNodes())
+                    loop(element.firstChild);
+            } while(element = element.nextSibling);
+        };
+        loop(element);
+        //loop(element.firstChild); // не включает потомков стартого элемента
+    }
+
+    //вывод в консоль результата прохода рекурсивной функции
+    let fn=function(element) {
+        console.log('Elem:', element);
+    }
+
+    walkDom(document.body, fn)
 </script>
 </body>
 </html>

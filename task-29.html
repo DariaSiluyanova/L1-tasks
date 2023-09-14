@@ -1,0 +1,62 @@
+<!-- Задача: Взаимодействие с формами: Напишите функцию, которая получает
+данные из формы на веб-странице и выполняет определенные действия с
+этими данными, например, отправляет их на сервер или отображает
+всплывающее окно с результатами. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task-29</title>
+</head>
+<body>
+    <form action="#" method="post" target="_blank" id="form">
+        <h2>Шаблон формы</h2>
+        <fieldset>
+          <legend>Персональные данные</legend>
+          <ul>
+            <li>
+              <label for="name">Имя:</label>
+              <input type="text" name="name" placeholder="Иван Иванов" id="name" required>
+            </li>
+            <li>
+              <label for="age">Возраст:</label>
+              <input type="number" name="age" placeholder="27" id="age" min="0" max="125" required>
+            </li>
+          </ul>
+        </fieldset>
+          <button type="submit">Отправить</button>
+        </div>
+      </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            //находим элемент формы
+            const form = document.querySelector("#form")
+            //добавляем слушатель на событие отправки формы
+            form.addEventListener("submit", send)
+            
+            //функция отправки формы
+            async function send(e) {
+                //предотвращаем автоматический переход по кнопке сабмита
+                e.preventDefault()
+                let formData = new FormData(form)
+                //"получаем успешный ответ"
+                let response = await fetch('https://jsonplaceholder.typicode.com/users', function() {
+                        method: "POST";
+                        body: formData;
+                    }
+                )
+                console.log(response)
+                //проверка на успешность ответа от сервера
+                if(response.ok) {
+                    alert("success")
+                } else {
+                    alert("error")
+                }
+            }
+        })
+    </script>
+</body>
+</html>

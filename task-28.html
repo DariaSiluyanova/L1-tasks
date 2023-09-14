@@ -1,0 +1,37 @@
+<!-- Задача: Создать и добавить элемент с использованием шаблонов: Напишите
+функцию, которая создает новый элемент с использованием шаблонов
+(например, с помощью тега <template>) и добавляет его в DOM.
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task-28</title>
+</head>
+<body>
+    <ul class="bye-list">
+        <li class="bye-list__item"><span class="product">Milk,</span> amount: <span class="amount">1p</span></li>
+    </ul>
+    <template id="item__li">
+        <li class="bye-list__item"><span class="product"></span>amount: <span class="amount"></span></li>
+    </template>
+</body>
+<script type="text/javascript">
+    //получаем родителя
+    const ul = document.querySelector("ul")
+    //получаем темплейт
+    const template = document.querySelector("#item__li")
+    //получаем содержимое темплейта
+    const amount = template.content.querySelector('.amount')
+    const product = template.content.querySelector('.product')
+
+    //вставляем новое содержимое в темплейт
+    amount.textContent = '200gm'
+    product.textContent = 'Cheese, '
+    //создаем дубликат c содержимым template путем глубокого копирования
+    let li = template.content.cloneNode(true)
+    ul.append(li)
+</script>
+</html>

@@ -10,7 +10,7 @@
 
     /**
      * function, меняющая падеж для разных числительных, поключается через node test-4.js
-     * @param {number, string} число, И.П, Р.П-ед.ч, Р.П-мн.ч
+     * @param {number, string} number число, И.П, Р.П-ед.ч, Р.П-мн.ч
      * @return {number, string}
      */
 export function changeCase(number, imenitelCase, roditelCaseSingle, roditelCaseMultiple) {
@@ -30,6 +30,7 @@ export function changeCase(number, imenitelCase, roditelCaseSingle, roditelCaseM
         return `${number}`+" "+`${word}`
     }
     
+    //падеж определяется исходя из последней цифры числа
     function defineCase(number) {
         if(number === 1) {
             word = imenitelCase

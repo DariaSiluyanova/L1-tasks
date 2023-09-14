@@ -28,9 +28,23 @@
 </body>
 <script type="text/javascript">
     const container = document.querySelector(".container")
-    const book = document.createElement("div")
-    book.classList.add("book")
-    book.textContent = "Властелин колец"
-    container.appendChild(book)
+
+    //функция создающая элемент
+    //@parent {object} дом-элемент контейнер
+    //@elemDom {string} элемент потомок
+    //@className {string} класс elemDom 
+    //@text {string} текст внутри elemDom 
+    function createElement(parent, elemDom, className, text) {
+        //создаем элемент 
+        const elem = document.createElement(elemDom)
+        //добавляем класс
+        elem.classList.add(className)
+        //добавляем текст внутрь созданного элемента
+        elem.textContent = text
+        //вставляем элемент в родителя
+        parent.appendChild(elem)
+    }
+
+    createElement(container, "div", "book",  "Властелин колец")
 </script>
 </html>

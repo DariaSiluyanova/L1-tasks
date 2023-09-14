@@ -30,7 +30,7 @@ const MathX = {
    /**
     * 2.
     * function, вычисление всех чисел в ряду Фибоначчи до числа N (включительно)
-    * @param {number} число N
+    * @param {number} number число N
     * @returns {number}
     **/ 
     fibByN(number) {
@@ -51,7 +51,7 @@ const MathX = {
     },
     /**
     * function, проверка на простое число
-    * @param {number} N-e простоe числo
+    * @param {number} number N-e простоe числo
     * @returns {number} 
     **/ 
     numIsSimple(number) {
@@ -64,7 +64,7 @@ const MathX = {
    },
    /**
     * function, создающая array простых чисел
-    * @param {number} длина array
+    * @param {number} number длина array
     * @returns {array} 
     **/ 
     simpleArr(number) {
@@ -80,7 +80,7 @@ const MathX = {
     /**
     * 3.
     * function, вычисление N-го простого числа
-    * @param {number} N-e числo
+    * @param {number} number N-e числo
     * @returns {number} 
     **/ 
     simpleNum(number) {
@@ -91,7 +91,7 @@ const MathX = {
     /**
      * 4.
      * function, вычисление всех простых чисел до числа N (включительно)
-     * @param {number}, число N
+     * @param {number} number, число N
      * @return {number}
      */
 

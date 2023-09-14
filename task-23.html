@@ -97,19 +97,17 @@
                 let symbolsCase = document.getElementById("symbol");
                 let complex = document.querySelector(".complex")
 
-                // Когда пользователь нажимает на поле - рендерятся подсказки к валидному паролю
+                // Когда пользователь нажимает на поле - рендерятся подсказки для успешной валидации
                 input.onfocus = function() {
                     document.getElementById("message").style.display = "block";
                 }
-
-                // Когда пользователь начинает вводить что-то в поле пароля
-                input.onkeyup = function() {
-                    let complexity = {
-                        score: 0
-                    }
+                определенный
 
                     // Проверка строчных букв
+                    //создается регулярное выражение
                     let lowerCaselowcases = /[a-z]/g;
+                    //в случае успешной валидации удаляется класс невалидности
+                    //добавляется валидный класс и наоборот в случае неуспеха
                     if(input.value.match(lowerCaselowcases)) {
                         lowcase.classList.remove("invalid");
                         lowcase.classList.add("valid");
