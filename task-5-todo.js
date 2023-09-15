@@ -11,7 +11,7 @@ const data = JSON.parse(JSON.stringify(people))
 // функция должна получать JSON, содержащий список объектов, на выходе
 // объект, представляющий из себя односвязный список.
 
-
+//создаем класс узла
 class Node { 
     //конструктор класса связного списка
     constructor(value, next = null) {
@@ -34,7 +34,7 @@ class LinkedList {
 
     //метод добавления нового элемента в конец списка
     addNode(value) {
-        let newNode = new LinkedList(value);
+        let newNode = new Node(value);
     
         //в случае, если ещё не было узлов списка, создаем первый 
         if (!this.head || !this.tail) {
@@ -53,11 +53,10 @@ function formateJSON() {
         let newList = new LinkedList()
         let i = 0
         data.forEach(element => {
-        newList.addNode(element)
+            newList.addNode(element)
         console.log(newList)
     }); 
     return newList
 }
 
-//тут я подзастряла, не могу вывести значения json в список
 console.log(formateJSON())
