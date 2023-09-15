@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>task-17</title>
 </head>
 <body class="body">
     <form action="/some-route" action="GET" id="search">
@@ -16,9 +16,8 @@
         </div>
         <div id="map" style="width: 600px; height: 400px"></div>
     </form>
-    <script src="https://api-maps.yandex.ru/v3/?apikey=148d6a59-14bc-4ade-88a0-94fdc5d29149&lang=ru_RU"></script>
-    <script src="https://suggest-maps.yandex.ru/v1/suggest?apikey=3694998d-3fed-4adc-82a7-1eee2ce42b0a&lang=ru_RU"></script>
-    <script src="/task-17/task-17.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=148d6a59-14bc-4ade-88a0-94fdc5d29149" type="text/javascript"></script>
+    <script src="/task-17todo/task-17.js"></script>
 </body>
 </html>
 <style>
@@ -26,10 +25,12 @@
         display: block;
         height: 100%;
         width: 100%;
+        box-sizing: border-box;
     }
     
     .geo {
-        height: 20px;
+        height: 50px;
+        font-size: 32px;
     }
 
     #search {
@@ -57,13 +58,15 @@
         position: relative; 
         flex-direction: column; 
         justify-content: space-around; 
-        width: 300px; 
-        height: 150px;
+        padding: 30px;
+        width: 100%; 
+        height: 100%;
+        box-sizing: border-box;;
     }
 
     button {
         background-color: green;
-        height: 30px;
+        height: 50px;
         color: azure;
         border: none;
         border-radius: 10px;

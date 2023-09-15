@@ -5,76 +5,23 @@
 // выбрать подходящее значение.
 // Реализовать дебоунсинг и защиту от троттлинга с помощью замыканий.
 
+// Реализация дебаунсинга взята с https://doka.guide/js/debounce/
+
 const searchForm = document.getElementById("search")
-const searchInput = searchForm.querySelector('.geo');
+const searchInput = searchForm.querySelector('geo');
 const searchResults = document.querySelector('.search-results');
 
-const cities = []
-
-/**
- * function, проверяющая содержится ли пользовательский запрос в базе данных
- * @param {string} query, вводимые символы
- * @returns {string}
- */
-// В функции contains мы будем проверять,
-// содержится ли пользовательский запрос
-// в каком-либо из названий:
-function contains(query) {
-    return cities.filter((title) =>
-        title.toLowerCase().includes(query.toLowerCase())
-    )
-}
-
-/**
- * object
- * method search, ответ сервера с промисом (с задержкой)
- */
-// Мок-объект сервера будет содержать метод search:
-const server = {}
-// let url = "https://suggest-maps.yandex.ru/v1/suggest?apikey=3694998d-3fed-4adc-82a7-1eee2ce42b0a&text="
-
-fetch(url, {
-    method: "GET",
-    headers: {
-        'Content-Type': 'application/json'
-    }
-}).then(function(response) {
-    return response.json();
-}).then(function(data) {
-    console.log(data)
-}).catch(function(error) {
-    console.error('Something went wrong');
-    console.log(error)
-})
-  
-/**
- * обработчик события input, получает подходящий список от сервера и согласно сопадающим вариантам вставляет в html строчки с возможными адресами
- */
+ymaps = window.ymaps
 
 
- // "Получаем" список названий городов от сервера:
-function handleInput(e) {
-    console.log(e.target)
-    const { list } = response
-
-    // Проходим по каждому из элементов списка,
-    // и составляем строчку с несколькими <li> элементами...
-    const html = list.reduce((markup, item) => {
-    return `${markup}<option value=${item}>${item}</option>`
-    }, ``)
-
-    // ...которую потом используем как содержимое списка:
-    searchResults.innerHTML = html
-
-}
-
-const debounceHandle = debounce(handleInput, 250)
-
-searchInput.addEventListener('input', debounceHandle)
+function init() {
+    let suggestAddress = new ymaps.SuggestView('geo');
+} 
+const debounceHandle = debounce(ymaps.ready(init), 250)
 
 
 /**
- * функция, откладывающая запрос на сервер
+ * функция, откладывающая запрос на сервер пока пользователь не введет что-нибудь
  * @param {*} callee, функция, которую нужно отложить
  * @param {*} timeoutMs, интервал времени, спустя которое нужно вызвать функцию calee
  * @returns {function}
