@@ -3,7 +3,7 @@
 * [task-2](https://github.com/DariaSiluyanova/L1-tasks/blob/main/task-2.js)
 * [task-3](https://github.com/DariaSiluyanova/L1-tasks/blob/main/task-3.js)
 * [task-4](https://github.com/DariaSiluyanova/L1-tasks/blob/main/task-4.js)
-* [task-5](https://github.com/DariaSiluyanova/L1-tasks/blob/main/task-5-todo.js)
+* [task-5](https://github.com/DariaSiluyanova/L1-tasks/blob/main/task-5.js)
 * [task-6](https://github.com/DariaSiluyanova/L1-tasks/blob/main/task-6.js)
 * [task-7](https://github.com/DariaSiluyanova/L1-tasks/blob/main/task-7.js)
 * [task-8](https://github.com/DariaSiluyanova/L1-tasks/blob/main/task-8.js)
